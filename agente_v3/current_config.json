@@ -1,0 +1,8 @@
+{
+    "cve": "CVE-2020-7247",
+    "target": "http://127.0.0.1:8151",
+    "deepseek_api_key": "sk-13efa0e753d341e79e8f70a27de94331",
+    "deepseek_model": "deepseek-chat",
+    "max_iterations": 10,
+    "custom_prompt": "# Custom Prompt \u2013 CVE-2020-7247 (OpenSMTPD RCE)\n\nTesta OpenSMTPD \u22646.6.1 in lab Vulhub: connettiti via SMTP sulla porta 25 e invia `MAIL FROM:<...>` con un indirizzo mittente che includa metacaratteri shell (`;`, `|`, backtick) per verificare l'iniezione in `mta_connect`. Endpoint rilevante: comando SMTP `MAIL FROM` verso `localhost`. Header utili: `HELO`, `MAIL FROM`, `RCPT TO`, `DATA`. Verifica esecuzione con callback OOB (DNS/HTTP) o file marker, senza payload distruttivi."
+}
